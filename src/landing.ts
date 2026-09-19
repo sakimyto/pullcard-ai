@@ -67,6 +67,23 @@ const CHOICE_LABELS = {
   'card-glow': Object.fromEntries(GLOW_STYLES.map((g) => [g, GLOW_SPEC[g].title])),
 }
 
+// PullCard は sakimyto.com の実験台帳に載る実験の一つ。作者の Person エンティティ
+// (@id) と台帳の記録ページを結び、検索エンジン/AI に「誰が作ったか」を渡す
+const CANONICAL_URL = 'https://pullcard.sakimyto.com/'
+const LAB_URL = 'https://sakimyto.com/lab/pullcard'
+const APP_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'PullCard AI',
+  url: CANONICAL_URL,
+  description: 'Your GitHub, as a customizable AI builder trading card.',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Web',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  creator: { '@id': 'https://sakimyto.com/#person' },
+  sameAs: [LAB_URL],
+}
+
 export function renderLandingPage(): string {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -77,6 +94,8 @@ export function renderLandingPage(): string {
   <meta name="description" content="Your GitHub, as a customizable trading card. Pick your theme and glow, then add it to your README with one line of markdown." />
   <meta property="og:title" content="PullCard AI — AI Builder Trading Card" />
   <meta property="og:description" content="Your GitHub, as a trading card. Proof you ship with AI." />
+  <link rel="canonical" href="${CANONICAL_URL}" />
+  <script type="application/ld+json">${inlineJson(APP_JSON_LD)}</script>
   <style>
     :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --muted: #8b949e; --accent: #a371f7 }
     * { margin: 0; padding: 0; box-sizing: border-box }
@@ -204,7 +223,7 @@ export function renderLandingPage(): string {
     </section>
 
     <footer>
-      <a href="https://github.com/sakimyto/pullcard-ai">GitHub</a> · MIT · stats from public repos, last 12 weeks
+      <a href="https://github.com/sakimyto/pullcard-ai">GitHub</a> · MIT · stats from public repos, last 12 weeks · <a href="${LAB_URL}">an experiment by sakimyto</a>
     </footer>
   </div>
   <script>
