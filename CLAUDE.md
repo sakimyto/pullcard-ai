@@ -18,6 +18,7 @@ AI coding style trading card generator for GitHub profiles. Canonical URL: https
 ## Rules
 - UI・アニメーションの作成・修正・レビューでは、[emilkowalski/skills](https://github.com/emilkowalski/skills) の該当スキルを使う。
 - 表示崩れのテストには `break-ui`、スマホ向けの調整には `mobile-native` を使い、既存のデザイン規約・デザインシステムを優先する。
+- 画面がAIっぽく見えるとき（紫のグラデーション、光り、絵文字ラベル、不揃いな余白など）は unslop スキル（heydamir/unslop）で直す。
 
 - Pure SVG only (no foreignObject, no satori)
 - All analyzers are pure functions with typed inputs/outputs
