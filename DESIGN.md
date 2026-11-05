@@ -43,3 +43,5 @@ The dedicated development Worker originally rejected primitive named exports; mo
 Phone hardware, software keyboard behavior, actual notch insets, 200% browser zoom and screen readers remain unverified. Native disclosure/focus checks used the connected Chromium browser; this is not a guarantee for every browser. The visible card statistics in saved screenshots are development fixtures. Production deployment has not been performed.
 
 All 544 tests in 37 files, TypeScript and Biome passed. The production Worker configuration dry run passed with the existing bindings. A final eight responsive theme checks confirmed that both form inputs and buttons use Geist; first-view placement, 44px controls and horizontal overflow checks still passed.
+
+The asset-route checker detected all five valid source mutations (method restriction, legacy redirect, HEAD body, font bytes and arbitrary font paths). Both the unchanged and restored controls passed. Production dependency audit passed. The checker runs in CI and restores the source after each case.
