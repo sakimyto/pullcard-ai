@@ -6,6 +6,7 @@ import { checkChromeScript, landingFacts } from './landing-design-contract'
 
 const baseline = JSON.parse(readFileSync('tests/fixtures/landing-design-3c93b9f.json', 'utf8'))
 function assertShell(html: string) {
+  assert.doesNotMatch(html, /text-wrap\s*:\s*balance/, 'PC3 normal heading wrap')
   assert.match(html, /class="app-home" href="https:\/\/sakimyto.com\/"/, 'PC1 shared home')
   assert.match(html, /class="app-name" href="\/"/, 'PC1 service home')
   assert.match(html, /href="https:\/\/sakimyto.com\/lab">All services<\/a>/, 'PC1 directory')
@@ -26,6 +27,11 @@ function assertShell(html: string) {
 }
 describe('shared site design', () => {
   const html = renderLandingPage()
+  it('rejects restoring balanced headings', () => {
+    expect(() => assertShell(html.replace('</style>', 'h1{text-wrap:balance}</style>'))).toThrow(
+      /PC3/,
+    )
+  })
   it('keeps gallery hover position stable', () => {
     const check = (value: string) =>
       assert.doesNotMatch(value, /\.g-card:hover\s*\{[^}]*transform/, 'PC3 stable gallery hover')

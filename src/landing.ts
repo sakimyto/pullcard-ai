@@ -106,7 +106,7 @@ export function renderLandingPage(): string {
     * { margin: 0; padding: 0; box-sizing: border-box }
     body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.6 }
     .wrap { max-width: 960px; margin: 0 auto; padding: calc(var(--header-space) + 32px) max(24px, env(safe-area-inset-right, 0px)) max(64px, env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px)) }
-    h1 { font-size: 56px; line-height: 1.3; letter-spacing: 0; text-wrap: balance }
+    h1 { font-size: 56px; line-height: 1.3; letter-spacing: 0 }
     .sub { color: var(--muted); font-size: 17px; margin: 14px 0 24px; max-width: min(46ch, 100%) }
     /* Hero: input + button live inside the first view, card demo alongside */
     .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px); gap: 40px; align-items: center }
