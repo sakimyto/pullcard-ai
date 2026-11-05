@@ -1,0 +1,9 @@
+{
+  "name": "pullcard-design-preview",
+  "main": "design-preview-worker.ts",
+  "compatibility_date": "2025-01-01",
+  "workers_dev": false,
+  "rules": [
+    { "type": "Data", "globs": ["**/*.ttf", "**/*.woff2", "**/*.png"], "fallthrough": true }
+  ]
+}

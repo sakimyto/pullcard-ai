@@ -37,6 +37,9 @@ jobs:
       - name: Test
         run: bun run test
 
+      - name: Static asset counterexamples
+        run: bun run test:site-assets-mutations
+
       # continue-on-error を外した。緑を素通りする lint は、無いのと同じで
       # 「CI は通っている」という誤った安心だけを生む
       - name: Lint

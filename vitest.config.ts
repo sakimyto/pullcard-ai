@@ -11,7 +11,7 @@ import { type Plugin, defineConfig } from 'vitest/config'
 // ArrayBuffer is a faithful stand-in for the Worker contract in both cases.
 // The resvg wasm lives in node_modules, so it must be inlined (below) for this hook
 // to run instead of Node's native ESM-wasm loader (which fails on its `wbg` import).
-const BINARY_RE = /\.(ttf|wasm)(\?.*)?$/
+const BINARY_RE = /\.(ttf|woff2|wasm|png)(\?.*)?$/
 
 function binaryArrayBufferLoader(): Plugin {
   return {
@@ -19,7 +19,7 @@ function binaryArrayBufferLoader(): Plugin {
     enforce: 'pre',
     load(id) {
       const path = id.split('?')[0]
-      if (!path.endsWith('.ttf') && !path.endsWith('.wasm')) return null
+      if (!BINARY_RE.test(id)) return null
       const b64 = readFileSync(path).toString('base64')
       return `const _bytes = Uint8Array.from(atob(${JSON.stringify(
         b64,
@@ -49,5 +49,5 @@ export default defineConfig({
       ),
     },
   },
-  assetsInclude: [/\.(ttf|wasm)(\?.*)?$/],
+  assetsInclude: [/\.(ttf|woff2|wasm|png)(\?.*)?$/],
 })
