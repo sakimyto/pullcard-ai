@@ -1,4 +1,7 @@
 import { App } from '@octokit/app'
+import geist from '../assets/site/Geist.woff2'
+import geistMono from '../assets/site/GeistMono.woff2'
+import icon from '../assets/site/sakimyto-icon.png'
 import { recordRender } from '../src/analytics'
 import { getCachedOrProduce } from '../src/cache'
 import {
@@ -14,6 +17,12 @@ import { renderLandingPage } from '../src/landing'
 import { isBotRequest, renderOgpHtml, svgToPng } from '../src/ogp'
 import { renderPlaceholderCard } from '../src/svg/v2/cardV2'
 import { renderOgError, renderOgShare } from '../src/svg/v2/ogShare'
+
+const SITE_ASSETS: Record<string, { data: ArrayBuffer; contentType: string }> = {
+  '/fonts/Geist.woff2': { data: geist, contentType: 'font/woff2' },
+  '/fonts/GeistMono.woff2': { data: geistMono, contentType: 'font/woff2' },
+  '/site/icon.png': { data: icon, contentType: 'image/png' },
+}
 
 interface RateLimiter {
   limit(opts: { key: string }): Promise<{ success: boolean }>
@@ -313,6 +322,20 @@ export default {
     if (LEGACY_HOSTS.has(url.hostname)) {
       url.hostname = 'pullcard.sakimyto.com'
       return Response.redirect(url.toString(), 301)
+    }
+
+    if (Object.hasOwn(SITE_ASSETS, pathname)) {
+      if (req.method !== 'GET' && req.method !== 'HEAD')
+        return new Response(null, { status: 405, headers: { Allow: 'GET, HEAD' } })
+      const asset = SITE_ASSETS[pathname]
+      return new Response(req.method === 'HEAD' ? null : asset.data, {
+        headers: {
+          'Content-Type': asset.contentType,
+          'Content-Length': String(asset.data.byteLength),
+          'Cache-Control': 'public, max-age=86400',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      })
     }
 
     const cache = caches.default

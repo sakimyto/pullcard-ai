@@ -1,0 +1,12 @@
+{
+  "body": "660669bd638f446ca7710a7f5e97d6f6412c225c67a36fd2ba03480c0d205312",
+  "app": "8e242446cd3f2026cabd39c818005005016bcee0bb757dbed14814e9d7f80a36",
+  "seo": [
+    "<title>PullCard AI — AI Builder Trading Card</title>",
+    "<meta name=\"description\" content=\"Your GitHub, as a customizable trading card. Pick your theme and glow, then add it to your README with one line of markdown.\" />",
+    "<meta property=\"og:title\" content=\"PullCard AI — AI Builder Trading Card\" />",
+    "<meta property=\"og:description\" content=\"Your GitHub, as a trading card. Proof you ship with AI.\" />",
+    "<link rel=\"canonical\" href=\"https://pullcard.sakimyto.com/\" />",
+    "<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"WebApplication\",\"name\":\"PullCard AI\",\"url\":\"https://pullcard.sakimyto.com/\",\"description\":\"Your GitHub, as a customizable AI builder trading card.\",\"applicationCategory\":\"DeveloperApplication\",\"operatingSystem\":\"Web\",\"offers\":{\"@type\":\"Offer\",\"price\":\"0\",\"priceCurrency\":\"USD\"},\"creator\":{\"@id\":\"https://sakimyto.com/#person\"},\"sameAs\":[\"https://sakimyto.com/lab/pullcard\"]}</script>"
+  ]
+}

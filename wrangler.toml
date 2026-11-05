@@ -45,7 +45,7 @@ simple = { limit = 25, period = 60 }
 # this, resvg-wasm has no fonts and every OGP PNG renders with all text missing.
 [[rules]]
 type = "Data"
-globs = ["**/*.ttf"]
+globs = ["**/*.ttf", "**/*.woff2", "**/*.png"]
 fallthrough = true
 
 # SWR card cache: fresh 6h / stale 24h (stale-if-error). GitHub API 枯渇時は

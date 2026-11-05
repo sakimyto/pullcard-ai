@@ -4,12 +4,12 @@ AI coding style trading card generator for GitHub profiles. Canonical URL: https
 
 ## Commands
 - `bun run test` — run tests (Vitest; loads vitest.config.ts binary loader for wasm/fonts — `bun test` native can't run the resvg pixel test)
-- `bun run dev` — local Vercel dev server
+- `bun run dev` — local Cloudflare Worker
 - `bun run typecheck` — type check
 - `bun run lint` — lint with Biome
 
 ## Architecture
-- `api/index.ts` — Vercel Edge Function entry
+- `api/index.ts` — Cloudflare Workers entry
 - `src/github/` — GitHub GraphQL client
 - `src/analyzers/` — Data analysis (coauthor, tools, score)
 - `src/svg/` — SVG card generation
@@ -20,6 +20,8 @@ AI coding style trading card generator for GitHub profiles. Canonical URL: https
 - 表示崩れのテストには `break-ui`、スマホ向けの調整には `mobile-native` を使い、既存のデザイン規約・デザインシステムを優先する。
 - 画面がAIっぽく見えるとき（紫のグラデーション、光り、絵文字ラベル、不揃いな余白など）は unslop スキル（heydamir/unslop）で直す。
 
+- Preview/decorative motion has no stop/play control: start still or become still within 4.5 seconds, and respect reduced motion. Interactive product controls are separate.
+- Shared page design lives in `DESIGN.md` and `src/site-design.ts`; keep card artwork independent.
 - Pure SVG only (no foreignObject, no satori)
 - All analyzers are pure functions with typed inputs/outputs
 - Tests use fixture data, never hit real GitHub API

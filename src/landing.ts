@@ -5,6 +5,7 @@ import {
   GLOW_SPEC,
   GLOW_STYLES,
 } from './card/customization'
+import { SITE_HEADER, SITE_SCRIPT, SITE_STYLES, THEME_INIT } from './site-design'
 import { themes } from './svg/themes'
 
 // 属性値・スクリプト文脈へ差し込む値のエスケープ。入れる値は今はすべて配色表由来の
@@ -89,19 +90,23 @@ export function renderLandingPage(): string {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
   <title>PullCard AI — AI Builder Trading Card</title>
   <meta name="description" content="Your GitHub, as a customizable trading card. Pick your theme and glow, then add it to your README with one line of markdown." />
   <meta property="og:title" content="PullCard AI — AI Builder Trading Card" />
   <meta property="og:description" content="Your GitHub, as a trading card. Proof you ship with AI." />
   <link rel="canonical" href="${CANONICAL_URL}" />
   <script type="application/ld+json">${inlineJson(APP_JSON_LD)}</script>
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#111629" />
+  <script data-theme-init>${THEME_INIT}</script>
+  <script data-site-chrome>${SITE_SCRIPT}</script>
   <style>
-    :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --muted: #8b949e; --accent: #a371f7 }
+    ${SITE_STYLES}
     * { margin: 0; padding: 0; box-sizing: border-box }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6 }
-    .wrap { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px }
-    h1 { font-size: 42px; line-height: 1.1; letter-spacing: -0.02em }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.6 }
+    .wrap { max-width: 960px; margin: 0 auto; padding: calc(var(--header-space) + 32px) max(24px, env(safe-area-inset-right, 0px)) max(64px, env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px)) }
+    h1 { font-size: 56px; line-height: 1.3; letter-spacing: 0; text-wrap: balance }
     .sub { color: var(--muted); font-size: 17px; margin: 14px 0 24px; max-width: min(46ch, 100%) }
     /* Hero: input + button live inside the first view, card demo alongside */
     .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px); gap: 40px; align-items: center }
@@ -114,9 +119,9 @@ export function renderLandingPage(): string {
     .hero-card.loading, .result-card.loading { opacity: .5 }
     .hero-cap { color: var(--muted); font-size: 12px; letter-spacing: .04em; margin-top: 10px; max-width: 320px; text-align: center }
     .row { display: flex; gap: 8px; flex-wrap: wrap }
-    input#username-input { flex: 1; min-width: 200px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; border-radius: 8px; font-size: 16px }
-    input#username-input:focus { outline: none; border-color: var(--accent) }
-    button { background: var(--accent); border: 0; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 600 }
+    input#username-input { flex: 1; min-width: 0; min-height: 48px; background: var(--bg); border: 1px solid var(--input); color: var(--text); padding: 12px 14px; border-radius: 8px; font-size: 16px }
+    input#username-input:focus { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent) }
+    button { min-height: 48px; min-width: 44px; background: var(--primary); border: 0; color: var(--on-primary); padding: 12px 20px; border-radius: 999px; font-size: 16px; cursor: pointer; font-weight: 600 }
     button.ghost { background: transparent; border: 1px solid var(--border); color: var(--text) }
     /* テーマは十数種あり横並びだと隣のカラムを押し出すので、選択肢は縦に積む */
     .customizer { display: grid; gap: 14px; margin: 20px 0; min-width: 0 }
@@ -125,9 +130,9 @@ export function renderLandingPage(): string {
     .choices { display: flex; flex-wrap: wrap; gap: 7px }
     .choice { cursor: pointer; position: relative }
     .choice input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap }
-    .choice-ui { align-items: center; background: var(--panel); border: 1px solid var(--border); border-radius: 999px; color: var(--muted); display: inline-flex; font-size: 13px; font-weight: 600; gap: 7px; min-height: 34px; padding: 6px 11px; transition: border-color .15s ease, color .15s ease, background .15s ease }
-    .choice input:checked + .choice-ui { background: #211832; border-color: var(--accent); color: var(--text) }
-    .choice input:focus-visible + .choice-ui { outline: 2px solid #fff; outline-offset: 2px }
+    .choice-ui { align-items: center; background: var(--panel); border: 1px solid var(--border); border-radius: 999px; color: var(--muted); display: inline-flex; font-size: 13px; font-weight: 600; gap: 7px; min-height: 44px; padding: 6px 11px; transition: border-color .15s ease, color .15s ease, background .15s ease }
+    .choice input:checked + .choice-ui { background: var(--accent-soft); border-color: var(--accent); color: var(--text) }
+    .choice input:focus-visible + .choice-ui { outline: 2px solid var(--accent); outline-offset: 2px }
     .swatch { border: 1px solid #ffffff40; border-radius: 50%; display: inline-block; height: 10px; width: 10px }
     .hint { color: var(--muted); font-size: 13px; margin-top: 10px; min-height: 1em }
     /* Result (post-summon): the wow first, then the embed steps */
@@ -136,9 +141,9 @@ export function renderLandingPage(): string {
     #result[hidden] { display: none }
     .result-card { display: block; width: 100%; max-width: 340px; border-radius: 14px }
     .steps-panel { display: flex; flex-direction: column; gap: 20px }
-    .step { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px }
+    .step { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-panel); padding: 18px }
     .step-h { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px }
-    .step-n { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px }
+    .step-n { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-size: 13px }
     .step-body { color: var(--muted); font-size: 14px; margin-top: 8px }
     code { background: var(--bg); border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; font-size: 13px }
     pre#markdown-output { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin: 10px 0; overflow-x: auto; font-size: 13px; white-space: pre-wrap; word-break: break-all }
@@ -147,10 +152,9 @@ export function renderLandingPage(): string {
     .gallery-title { font-size: 20px; letter-spacing: -0.01em; margin-bottom: 6px }
     .gallery-note { color: var(--muted); font-size: 13px; margin-bottom: 18px; max-width: min(60ch, 100%) }
     .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px }
-    .g-card { display: block; background: none; border: none; padding: 0; cursor: pointer; color: var(--text); font: inherit; text-align: left; transition: transform .15s ease }
-    .g-card:hover { transform: translateY(-4px) }
+    .g-card { display: block; background: none; border: none; padding: 0; cursor: pointer; color: var(--text); font: inherit; text-align: left }
     .g-thumb { display: block; width: 100%; border-radius: 14px; border: 1px solid var(--border); background: var(--panel); min-height: 280px }
-    .g-card:hover .g-thumb { border-color: var(--accent) }
+    @media (hover: hover) and (pointer: fine) { .g-card:hover .g-thumb { border-color: var(--accent) } }
     .g-cap { display: flex; align-items: center; gap: 8px; margin-top: 9px; font-size: 13px; color: var(--muted); min-width: 0 }
     .g-elem { font-size: 15px; line-height: 1; flex: 0 0 auto }
     .g-name { font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
@@ -159,18 +163,25 @@ export function renderLandingPage(): string {
     a { color: var(--accent) }
     @media (max-width: 720px) {
       .hero, #result { grid-template-columns: 1fr }
-      h1 { font-size: 34px }
+      h1 { font-size: 36px }
       .hero-card { max-width: 260px; margin: 4px auto 0 }
       .hero-cap { max-width: 260px; margin-left: auto; margin-right: auto }
     }
+    @media (max-width: 480px) { .wrap { padding: calc(var(--header-space) + 24px) 16px 48px } .row { flex-direction: column } .row button { width: 100% } }
   </style>
 </head>
 <body>
+  ${SITE_HEADER}
   <div class="wrap">
     <section id="hero" class="hero">
       <div class="hero-copy">
         <h1>Your GitHub,<br/>as a trading card.</h1>
         <p class="sub">PullCard AI turns your public GitHub activity into an AI Builder trading card. Pick a look that feels like you, then summon it in seconds.</p>
+        <div class="row">
+          <input id="username-input" placeholder="octocat" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" enterkeyhint="go" aria-label="GitHub username" />
+          <button id="generate-button">Summon my card</button>
+        </div>
+        <p class="hint" id="input-hint"></p>
         <div class="customizer" aria-label="Card appearance">
           <fieldset class="choice-set">
             <legend>Theme</legend>
@@ -185,11 +196,7 @@ export function renderLandingPage(): string {
             </div>
           </fieldset>
         </div>
-        <div class="row">
-          <input id="username-input" placeholder="octocat" autocomplete="off" spellcheck="false" aria-label="GitHub username" />
-          <button id="generate-button">Summon my card</button>
-        </div>
-        <p class="hint" id="input-hint"></p>
+
       </div>
       <div class="hero-preview">
         <img id="hero-card" class="hero-card" src="${escapeAttr(PREVIEW_SRC)}" data-shown="${escapeAttr(PREVIEW_SRC)}" alt="AI Builder Trading Card preview" />

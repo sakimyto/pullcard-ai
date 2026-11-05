@@ -10,7 +10,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "lint": "bunx biome check .",
-    "lint:fix": "bunx biome check --write ."
+    "lint:fix": "bunx biome check --write .",
+    "test:site-assets-mutations": "bun scripts/check-site-assets-mutations.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
