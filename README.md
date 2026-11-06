@@ -93,3 +93,8 @@ bun run dev
 ## License
 
 MIT
+
+
+### Heading wrapping (2026-11-06)
+
+Headings inherit normal line wrapping without `text-wrap: balance`. Card content, generation, themes, routes, and SEO stay unchanged.
