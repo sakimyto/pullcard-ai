@@ -106,7 +106,7 @@ export function renderLandingPage(): string {
   <link rel="canonical" href="${CANONICAL_URL}" />
   <script type="application/ld+json">${inlineJson(APP_JSON_LD)}</script>
   <meta name="color-scheme" content="dark light" />
-  <meta name="theme-color" content="#111629" />
+  <meta name="theme-color" content="#171c30" />
   <script data-theme-init>${THEME_INIT}</script>
   <script data-site-chrome>${SITE_SCRIPT}</script>
   <style>
@@ -127,7 +127,7 @@ export function renderLandingPage(): string {
     .hero-card.loading, .result-card.loading { opacity: .5 }
     .hero-cap { color: var(--muted); font-size: 12px; letter-spacing: .04em; margin-top: 10px; max-width: 320px; text-align: center }
     .row { display: flex; gap: 8px; flex-wrap: wrap }
-    input#username-input { flex: 1; min-width: 0; min-height: 48px; background: var(--bg); border: 1px solid var(--input); color: var(--text); padding: 12px 14px; border-radius: 8px; font-size: 16px }
+    input#username-input { width: 100%; max-width: 100%; flex: 1; min-width: 0; min-height: 48px; background: var(--bg); border: 1px solid var(--input); color: var(--text); padding: 12px 14px; border-radius: 8px; font-size: 16px }
     input#username-input:focus { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent) }
     button { min-height: 48px; min-width: 44px; background: var(--primary); border: 0; color: var(--on-primary); padding: 12px 20px; border-radius: 999px; font-size: 16px; cursor: pointer; font-weight: 600 }
     button.ghost { background: transparent; border: 1px solid var(--border); color: var(--text) }
@@ -164,8 +164,8 @@ export function renderLandingPage(): string {
     pre#markdown-output { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin: 10px 0; overflow-x: auto; font-size: 13px; white-space: pre-wrap; word-break: break-all }
     /* Gallery: recently summoned, newest first — 実カードをそのまま並べる */
     #gallery { margin-top: 72px }
-    .gallery-title { font-size: 20px; letter-spacing: -0.01em; margin-bottom: 6px }
-    .gallery-note { color: var(--muted); font-size: 13px; margin-bottom: 18px; max-width: min(60ch, 100%) }
+    .gallery-title { font-size: 20px; letter-spacing: -0.01em; margin-bottom: 8px }
+    .gallery-note { color: var(--muted); font-size: 13px; margin-bottom: 24px; max-width: min(60ch, 100%) }
     .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px }
     .g-card { display: block; background: none; border: none; padding: 0; cursor: pointer; color: var(--text); font: inherit; text-align: left }
     .g-thumb { display: block; width: 100%; border-radius: 14px; border: 1px solid var(--border); background: var(--panel); min-height: 280px }

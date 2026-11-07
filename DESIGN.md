@@ -67,3 +67,31 @@ The public `/robots.txt` returned 400 because unknown paths fall through to card
 CD1: `/robots.txt` and `/sitemap.xml` serve GET/HEAD without GitHub, KV, analytics, cache access or rate-limit bindings. HEAD has the same headers and no body; other methods return 405. CD2: legacy domains redirect first, retaining path/query, and unknown paths keep their previous behavior. CD3: the sitemap includes only `https://pullcard.sakimyto.com/`; robots identifies Googlebot, bingbot and OAI-SearchBot. No GPTBot/Google-Extended/training policy is added. Query strings never alter these static documents.
 
 Verify both documents across read/write methods and legacy/current hosts with throwing environment and cache proxies. Use the actual response helper for method, HEAD, canonical and bot-name counterexamples. References checked 2026-11-07: https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec and https://developers.openai.com/api/docs/bots . These are finite HTTP dispatch contracts with no new state or concurrency, so exhaustive cases and negative variants are sufficient.
+
+
+## Hierarchy integration (2026-11-08)
+
+Apply the Japanese web-design supplement's conditional grouping/density review (L04/L05/R07) through this service's existing roles. Keep the server-rendered Worker, generator script, SVG artwork, content, API, permissions, limits and canonical/robots contracts. Do not import another CSS framework or a second token set.
+
+| Before | After | Why |
+| --- | --- | --- |
+| A separate band palette for floating chrome | Existing panel role for header and menu | Keep the floating content surface distinct from the page |
+| Header hover uses the panel itself | Existing accent-soft state | Preserve visible hover after merging surfaces |
+| Gallery title/note/content gaps of 6/18px | Related 8px, next content 24px | Keep the explanation together and separate the card collection |
+| Browser theme color follows the old band | Follows the current floating panel | Keep both saved themes consistent with the shell |
+
+PC7 FLOAT: Header/menu use panel, hover uses accent-soft and theme-color follows #171c30/#ffffff in dark/light. Remove the unused band role. Retain native menu/focus behavior and all 456 state sequences; verify the actual emitted script's color as well as theme state.
+
+PC8 GROUP: The gallery title and note stay 8px apart; the following collection starts 24px later. Other workflow density and the first-view primary action stay intact. Test the real template and plausible fixtures in the existing dev-only Worker at 320/390/768/1280px in both themes. Keep 0/1/24 cards and the 39-character username cases. The 200% HTML-text check is a controlled condition; it does not guarantee physical keyboards, browser chrome or screen readers.
+
+The baseline is clean main 4005933. Static and finite state tests must fail before the update and detect valid page-surface, hover, spacing and theme-color mutations after it. Existing independent body/app/SEO fixtures stay unchanged. Real browser checks corroborate the template contracts; no database or concurrency changes need Z3/TLA+.
+
+
+The 200% HTML-text check reproduced a real narrow-screen failure before the final adaptation: the native username field reached x=439 at a 320px viewport, and the full service name overflowed into adjacent controls. Bind the field width to its existing column and allow the name's inner span to ellipsize while keeping its full accessible text and the same home link. This does not shorten copy or change input values, names, limits or generator behavior.
+
+The bounded browser script is `scripts/check-design-ui.mjs`. It uses the existing dev-only fixture Worker and a separately provisioned Playwright 1.64.1 via `PLAYWRIGHT_MODULE`; it does not add a production or project dependency. Run the existing Wrangler fixture command above on 127.0.0.1:8798, then `PLAYWRIGHT_MODULE=/path/to/playwright node scripts/check-design-ui.mjs http://127.0.0.1:8798 chromium` (and `webkit`). It refuses non-local origins and aborts any external requests. Default fixture counts are one demo, 24 worst, zero empty and one single card. Evidence separates these fixture images from production data.
+
+
+Final verification: all 571 tests in 39 files, TypeScript and Biome passed. The unchanged independent body/app/SEO fixture still matches; 456 chrome-state sequences now also check initial and updated theme color. Eight new valid regressions are detected for floating/hover roles, grouping, bounded input/name and theme color. All five real static-resource mutations and restoration, production dependency audit and the existing Worker-config dry run passed. No dependency, binding, route, limit or account configuration changed.
+
+Chromium and WebKit each passed 32 fixture views (four widths, two themes, four datasets), including eight 200% HTML-text cases per engine. Native menu/Escape/focus, whole accessible service name, actual gallery grouping, saved themes and zero horizontal overflow passed. The original 320px/200% failure and element coordinates are saved as a counterexample. All browser contexts and the owned fixture Worker were closed. The temporary Wrangler bundle was cleaned on normal shutdown; generated files were neither committed nor excluded to weaken lint. Production release/readback remain pending until CI and merge.
