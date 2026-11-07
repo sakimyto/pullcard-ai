@@ -4,7 +4,7 @@ export const SITE_STYLES = `
     @font-face { font-family: 'Geist Mono'; src: url('/fonts/GeistMono.woff2') format('woff2'); font-weight: 100 900; font-display: swap }
     :root {
       color-scheme: dark;
-      --bg: #0c1020; --panel: #171c30; --band: #111629; --border: #262c42;
+      --bg: #0c1020; --panel: #171c30; --border: #262c42;
       --text: #eceef3; --muted: #a2a8c0; --accent: #a9b1ff; --accent-soft: #161a44;
       --input: #7a8097; --on-accent: #0c1020; --primary: #eceef3; --on-primary: #0c1020;
       --font-sans: Geist, 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif;
@@ -15,7 +15,7 @@ export const SITE_STYLES = `
     }
     html.light {
       color-scheme: light;
-      --bg: #f5f6f8; --panel: #fff; --band: #fff; --border: #e1e4eb;
+      --bg: #f5f6f8; --panel: #fff; --border: #e1e4eb;
       --text: #0c1020; --muted: #565d75; --accent: #4b53cf; --accent-soft: #f1f2ff;
       --on-accent: #fff; --primary: #0c1020; --on-primary: #f5f6f8;
       --shadow-shell: 0 0 0 1px color-mix(in oklab, #0c1020 7%, transparent), 0 1px 2px color-mix(in oklab, #0c1020 5%, transparent), 0 2px 6px -1px color-mix(in oklab, #0c1020 6%, transparent);
@@ -28,11 +28,12 @@ export const SITE_STYLES = `
     button:active, summary:active { transform: scale(.97) }
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px }
     code, pre { font-family: var(--font-mono) }
-    .app-header { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); z-index: 20; max-width: 1200px; margin: 0 auto; height: 64px; display: flex; align-items: center; gap: 4px; padding: 0 12px; border-radius: var(--radius-shell); background: var(--band); box-shadow: var(--shadow-shell) }
+    .app-header { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); z-index: 20; max-width: 1200px; margin: 0 auto; height: 64px; display: flex; align-items: center; gap: 4px; padding: 0 12px; border-radius: var(--radius-shell); background: var(--panel); box-shadow: var(--shadow-shell) }
     .app-identity { display: flex; min-width: 0; align-items: center; gap: 4px; margin-right: auto }
     .app-home, .app-name, .app-header nav a { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; text-decoration: none; color: var(--text) }
     .app-home { flex-shrink: 0 }
     .app-home img { width: 30px; height: 30px; border-radius: 8px }
+    .app-name span { min-width: 0; overflow: hidden; text-overflow: ellipsis }
     .app-name { padding: 0 8px; font-weight: 600; white-space: nowrap }
     .app-header nav a { padding: 0 12px; font-size: 14px; color: var(--muted) }
     .app-desktop-nav { display: flex; align-items: center; gap: 4px }
@@ -42,9 +43,9 @@ export const SITE_STYLES = `
     .app-menu { display: none }
     .app-menu > summary { list-style: none }
     .app-menu > summary::-webkit-details-marker { display: none }
-    .app-menu nav { position: absolute; top: calc(100% + 8px); left: 0; right: 0; display: flex; flex-direction: column; padding: 8px; border-radius: var(--radius-shell); background: var(--band); box-shadow: var(--shadow-menu); max-height: calc(100dvh - var(--header-space) - 24px); overflow-y: auto }
+    .app-menu nav { position: absolute; top: calc(100% + 8px); left: 0; right: 0; display: flex; flex-direction: column; padding: 8px; border-radius: var(--radius-shell); background: var(--panel); box-shadow: var(--shadow-menu); max-height: calc(100dvh - var(--header-space) - 24px); overflow-y: auto }
     .app-menu nav a { justify-content: flex-start; min-height: 48px; color: var(--text) }
-    @media (hover: hover) and (pointer: fine) { .app-header a:hover, .app-header button:hover, .app-menu > summary:hover { background: var(--panel); color: var(--text) } }
+    @media (hover: hover) and (pointer: fine) { .app-header a:hover, .app-header button:hover, .app-menu > summary:hover { background: var(--accent-soft); color: var(--text) } }
     @media (max-width: 1023px) { .app-desktop-nav { display: none } .app-menu { display: block } }
     @media (max-width: 639px) { :root { --header-space: calc(72px + env(safe-area-inset-top, 0px)) } .app-header { top: calc(8px + env(safe-area-inset-top, 0px)); left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); height: 56px; padding: 0 8px } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important } button:active, summary:active { transform: none } }
@@ -54,7 +55,7 @@ export const SITE_HEADER = `
   <header class="app-header" id="app-header">
     <div class="app-identity">
       <a class="app-home" href="https://sakimyto.com/" aria-label="sakimyto.com home"><img src="/site/icon.png" width="30" height="30" alt="" /></a>
-      <a class="app-name" href="/">PullCard AI</a>
+      <a class="app-name" href="/"><span>PullCard AI</span></a>
     </div>
     <nav class="app-desktop-nav" aria-label="Service navigation">${menuLinks}</nav>
     <button type="button" id="site-theme-toggle" aria-label="Switch to light mode">
@@ -74,7 +75,7 @@ export const SITE_SCRIPT = `
     function label() {
       const light = document.documentElement.classList.contains('light')
       button.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode')
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', light ? '#ffffff' : '#111629')
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', light ? '#ffffff' : '#171c30')
     }
     label()
     button.addEventListener('click', function () {

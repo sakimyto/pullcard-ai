@@ -61,6 +61,7 @@ export function checkChromeScript(script: string) {
           const headerEvents: Record<string, (event: unknown) => void> = {}
           const themeEvents: Record<string, () => void> = {}
           let focused = false
+          let themeColor = ''
           const menu = { open: initialOpen }
           const summary = {
             focus: () => {
@@ -97,7 +98,15 @@ export function checkChromeScript(script: string) {
             getElementById: (id: string) =>
               ({ 'app-header': header, 'app-menu': menu, 'site-theme-toggle': theme })[id],
             querySelector: (selector: string) =>
-              selector === '#app-menu > summary' ? summary : { setAttribute: () => {} },
+              selector === '#app-menu > summary'
+                ? summary
+                : selector === 'meta[name="theme-color"]'
+                  ? {
+                      setAttribute: (name: string, value: string) => {
+                        if (name === 'content') themeColor = value
+                      },
+                    }
+                  : null,
             addEventListener: (k: string, f: (e: unknown) => void) => {
               docEvents[k] = f
             },
@@ -113,6 +122,11 @@ export function checkChromeScript(script: string) {
           let open = initialOpen
           let light = initialLight
           let focus = false
+          assert.equal(
+            themeColor,
+            initialLight ? '#ffffff' : '#171c30',
+            'PC7 initial chrome theme color',
+          )
           for (const action of sequence) {
             if (action === 'open') {
               menu.open = !menu.open
@@ -140,6 +154,7 @@ export function checkChromeScript(script: string) {
             assert.equal(menu.open, open, `PC4 menu ${sequence}`)
             assert.equal(focused, focus, `PC4 focus ${sequence}`)
             assert.equal(classes.has('light'), light, `PC3 theme ${sequence}`)
+            assert.equal(themeColor, light ? '#ffffff' : '#171c30', 'PC7 chrome theme color')
           }
           checked++
         }

@@ -6,6 +6,26 @@ import { checkChromeScript, landingFacts } from './landing-design-contract'
 
 const baseline = JSON.parse(readFileSync('tests/fixtures/landing-design-3c93b9f.json', 'utf8'))
 function assertShell(html: string) {
+  for (const selector of ['\\.app-header', '\\.app-menu nav'])
+    assert.match(
+      html,
+      new RegExp(`${selector} \\{[^}]*background: var\\(--panel\\)`),
+      'PC7 floating panel',
+    )
+  assert.doesNotMatch(html, /--band\s*:|var\(--band\)/, 'PC7 no duplicate chrome palette')
+  assert.match(html, /summary:hover \{ background: var\(--accent-soft\)/, 'PC7 visible hover')
+  assert.match(html, /gallery-title \{[^}]*margin-bottom: 8px/, 'PC8 related explanation')
+  assert.match(html, /gallery-note \{[^}]*margin-bottom: 24px/, 'PC8 content group gap')
+  assert.match(
+    html,
+    /\.app-name span \{[^}]*overflow: hidden; text-overflow: ellipsis/,
+    'PC3 name remains within chrome',
+  )
+  assert.match(
+    html,
+    /input#username-input \{ width: 100%; max-width: 100%/,
+    'PC3 input remains within its column',
+  )
   assert.doesNotMatch(html, /text-wrap\s*:\s*balance/, 'PC3 normal heading wrap')
   assert.match(html, /class="app-home" href="https:\/\/sakimyto.com\/"/, 'PC1 shared home')
   assert.match(html, /class="app-name" href="\/"/, 'PC1 service home')
@@ -82,4 +102,46 @@ describe('shared site design', () => {
       expect(landingFacts(html.replace(from, to))).not.toEqual(baseline)
     }
   })
+})
+
+it('rejects valid floating-surface and grouping regressions', () => {
+  const html = renderLandingPage()
+  assertShell(html)
+  for (const [from, to, code] of [
+    [
+      'background: var(--panel); box-shadow: var(--shadow-shell)',
+      'background: var(--bg); box-shadow: var(--shadow-shell)',
+      'PC7',
+    ],
+    [
+      'background: var(--panel); box-shadow: var(--shadow-menu)',
+      'background: var(--bg); box-shadow: var(--shadow-menu)',
+      'PC7',
+    ],
+    [
+      'summary:hover { background: var(--accent-soft)',
+      'summary:hover { background: var(--panel)',
+      'PC7',
+    ],
+    [
+      '.gallery-title { font-size: 20px; letter-spacing: -0.01em; margin-bottom: 8px',
+      '.gallery-title { font-size: 20px; letter-spacing: -0.01em; margin-bottom: 24px',
+      'PC8',
+    ],
+    [
+      '.gallery-note { color: var(--muted); font-size: 13px; margin-bottom: 24px',
+      '.gallery-note { color: var(--muted); font-size: 13px; margin-bottom: 8px',
+      'PC8',
+    ],
+  ]) {
+    expect(html.includes(from)).toBe(true)
+    expect(() => assertShell(html.replace(from, to))).toThrow(new RegExp(code))
+  }
+})
+
+it('rejects a valid stale chrome theme color in the emitted script', () => {
+  const script =
+    renderLandingPage().match(/<script data-site-chrome>([\s\S]*?)<\/script>/)?.[1] ?? ''
+  expect(script).toContain("'#171c30'")
+  expect(() => checkChromeScript(script.replace("'#171c30'", "'#0c1020'"))).toThrow(/PC7/)
 })
