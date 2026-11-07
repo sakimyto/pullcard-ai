@@ -10,6 +10,7 @@ import {
   normalizeGlow,
   normalizeTheme,
 } from '../src/card/customization'
+import { discoveryResponse } from '../src/discovery'
 import { listGallery, recordGallery, removeFromGallery } from '../src/gallery'
 import type { GitHubQueryResponse } from '../src/github/types'
 import { type BuildResult, CARD_DATA_REV, buildCardData, renderCardResult } from '../src/handler'
@@ -323,6 +324,9 @@ export default {
       url.hostname = 'pullcard.sakimyto.com'
       return Response.redirect(url.toString(), 301)
     }
+
+    const discovery = discoveryResponse(req)
+    if (discovery) return discovery
 
     if (Object.hasOwn(SITE_ASSETS, pathname)) {
       if (req.method !== 'GET' && req.method !== 'HEAD')
