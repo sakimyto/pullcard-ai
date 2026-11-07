@@ -3,7 +3,20 @@ import { createHash } from 'node:crypto'
 import { runInNewContext } from 'node:vm'
 
 const digest = (value: string) => createHash('sha256').update(value).digest('hex')
-export function landingFacts(html: string) {
+export function landingFacts(input: string) {
+  const html = input
+    .replace('<main id="main">', '')
+    .replace(/ {4}<section id="how-it-works" data-discovery-info>[\s\S]*?<\/section><\/main>\n/, '')
+    .replace(/ {8}<p class="input-help" id="username-help">[^<]*<\/p>\n/, '')
+    .replace(
+      '<details data-appearance><summary class="appearance-title">Customize theme and glow</summary>',
+      '',
+    )
+    .replace('</fieldset></details>', '</fieldset>')
+    .replace(' aria-describedby="username-help input-hint" maxlength="39"', '')
+    .replace(' role="status" aria-live="polite"', '')
+    .replace(' aria-live="polite" aria-atomic="true"', '')
+    .replace(/ {2}<meta property="og:(?:type|url|image(?::alt)?)"[^>]*>\n/g, '')
   const body = html.slice(html.indexOf('<div class="wrap">'), html.lastIndexOf('\n  <script>'))
   const start = body.indexOf('<div class="row">')
   const end = body.indexOf('</p>', body.indexOf('<p class="hint"', start)) + 4

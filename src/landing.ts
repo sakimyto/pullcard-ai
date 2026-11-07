@@ -95,6 +95,14 @@ export function renderLandingPage(): string {
   <meta name="description" content="Your GitHub, as a customizable trading card. Pick your theme and glow, then add it to your README with one line of markdown." />
   <meta property="og:title" content="PullCard AI — AI Builder Trading Card" />
   <meta property="og:description" content="Your GitHub, as a trading card. Proof you ship with AI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="${CANONICAL_URL}" />
+  <meta property="og:image" content="${CANONICAL_URL}og?user=${PREVIEW_USER}&amp;theme=${DEFAULT_THEME}&amp;glow=${DEFAULT_GLOW}" />
+  <meta property="og:image:alt" content="An example PullCard AI trading card" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PullCard AI — AI Builder Trading Card" />
+  <meta name="twitter:description" content="Turn public GitHub activity into a customizable trading card and embed it in your README." />
+  <meta name="twitter:image" content="${CANONICAL_URL}og?user=${PREVIEW_USER}&amp;theme=${DEFAULT_THEME}&amp;glow=${DEFAULT_GLOW}" />
   <link rel="canonical" href="${CANONICAL_URL}" />
   <script type="application/ld+json">${inlineJson(APP_JSON_LD)}</script>
   <meta name="color-scheme" content="dark light" />
@@ -134,6 +142,13 @@ export function renderLandingPage(): string {
     .choice input:checked + .choice-ui { background: var(--accent-soft); border-color: var(--accent); color: var(--text) }
     .choice input:focus-visible + .choice-ui { outline: 2px solid var(--accent); outline-offset: 2px }
     .swatch { border: 1px solid #ffffff40; border-radius: 50%; display: inline-block; height: 10px; width: 10px }
+    .appearance-title { cursor: pointer; color: var(--text); font-size: 14px; font-weight: 600; min-height: 44px; padding: 10px 0 }
+    [data-appearance] fieldset { margin-top: 14px }
+    .input-help { color: var(--muted); font-size: 13px; max-width: 55ch }
+    #how-it-works { margin-top: 48px; max-width: 65ch }
+    #how-it-works h2 { font-size: 20px; margin-bottom: 12px }
+    #how-it-works p { color: var(--muted); font-size: 14px; margin: 10px 0 16px }
+    #how-it-works summary { cursor: pointer; min-height: 44px; padding: 10px 0; font-weight: 600 }
     .hint { color: var(--muted); font-size: 13px; margin-top: 10px; min-height: 1em }
     /* Result (post-summon): the wow first, then the embed steps */
     #result { margin-top: 48px; display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 36px; align-items: start }
@@ -172,17 +187,18 @@ export function renderLandingPage(): string {
 </head>
 <body>
   ${SITE_HEADER}
-  <div class="wrap">
+  <div class="wrap"><main id="main">
     <section id="hero" class="hero">
       <div class="hero-copy">
         <h1>Your GitHub,<br/>as a trading card.</h1>
         <p class="sub">PullCard AI turns your public GitHub activity into an AI Builder trading card. Pick a look that feels like you, then summon it in seconds.</p>
         <div class="row">
-          <input id="username-input" placeholder="octocat" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" enterkeyhint="go" aria-label="GitHub username" />
+          <input id="username-input" placeholder="octocat" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" enterkeyhint="go" aria-label="GitHub username" aria-describedby="username-help input-hint" maxlength="39" />
           <button id="generate-button">Summon my card</button>
         </div>
-        <p class="hint" id="input-hint"></p>
-        <div class="customizer" aria-label="Card appearance">
+        <p class="hint" id="input-hint" role="status" aria-live="polite"></p>
+        <p class="input-help" id="username-help">Enter your GitHub username, such as octocat. Public activity only; no sign-in needed to create a card.</p>
+        <div class="customizer" aria-label="Card appearance"><details data-appearance><summary class="appearance-title">Customize theme and glow</summary>
           <fieldset class="choice-set">
             <legend>Theme</legend>
             <div class="choices">
@@ -194,7 +210,7 @@ export function renderLandingPage(): string {
             <div class="choices">
               ${GLOW_CHOICES}
             </div>
-          </fieldset>
+          </fieldset></details>
         </div>
 
       </div>
@@ -210,7 +226,7 @@ export function renderLandingPage(): string {
         <div class="step">
           <div class="step-h"><span class="step-n">1</span> Copy the markdown</div>
           <pre id="markdown-output"></pre>
-          <button id="copy-button">Copy markdown</button>
+          <button id="copy-button" aria-live="polite" aria-atomic="true">Copy markdown</button>
         </div>
         <div class="step">
           <div class="step-h"><span class="step-n">2</span> Paste it into your GitHub profile README</div>
@@ -229,6 +245,12 @@ export function renderLandingPage(): string {
       <div id="gallery-grid" class="gallery-grid"></div>
     </section>
 
+    <section id="how-it-works" data-discovery-info>
+      <h2>How your GitHub trading card works</h2>
+      <p>Enter a GitHub username, pick a theme and glow, then copy the markdown into your profile README. You can change the appearance later using the same controls.</p>
+      <details><summary>What activity does the card use?</summary><p>PullCard summarizes observable activity from public repositories over the last 12 weeks. Scores and labels describe these public signals. Private repository activity is outside this view.</p></details>
+      <details><summary>Do I need to install the GitHub App?</summary><p>You can create and embed a card without signing in. Installing the GitHub App on your own account opts your card into the public gallery; uninstalling removes it.</p></details>
+    </section></main>
     <footer>
       <a href="https://github.com/sakimyto/pullcard-ai">GitHub</a> · MIT · stats from public repos, last 12 weeks · <a href="${LAB_URL}">an experiment by sakimyto</a>
     </footer>
