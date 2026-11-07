@@ -45,3 +45,17 @@ Phone hardware, software keyboard behavior, actual notch insets, 200% browser zo
 All 544 tests in 37 files, TypeScript and Biome passed. The production Worker configuration dry run passed with the existing bindings. A final eight responsive theme checks confirmed that both form inputs and buttons use Geist; first-view placement, 44px controls and horizontal overflow checks still passed.
 
 The asset-route checker detected all five valid source mutations (method restriction, legacy redirect, HEAD body, font bytes and arbitrary font paths). Both the unchanged and restored controls passed. Production dependency audit passed. The checker runs in CI and restores the source after each case.
+
+## Discovery and first-use follow-up (2026-11-07)
+
+PD1: Keep the card preview and primary action visible sooner on phones by placing the existing theme/glow controls in a native, initially closed disclosure. Every radio, theme and glow remains available. Keep the application script, card artwork, generation, cache, gallery opt-in and upstream limits unchanged.
+
+PD2: Provide a main landmark, persistent username guidance and a live error/status description. Announce copy feedback through the existing button. Include concise visible instructions about public data, the 12-week window and README use; do not imply that inferred signals measure a person's ability.
+
+PD3: Supply Open Graph and Twitter metadata using the same existing preview user, theme and glow as the visible example. Canonical, app identity and the actual card endpoint remain intact. No AI-only text, fabricated reviews or FAQ markup.
+
+Validate the actual emitted page, collapsed controls and browser interactions with fixture responses only. Project only the explicitly added markup back to the original content oracle; keep the original app-script digest exact. Test changed access labels and destinations as counterexamples. Use current test, lint, types, static-resource mutations and config gates before merging and releasing. These are finite DOM/template contracts; no database, AI call or concurrency policy changes are introduced.
+
+The original landing failed the new first-use tests before implementation. The final checks pass: 549 tests in 38 files, types, Biome, five real static-resource source mutations, Worker dry-run and production dependency audit. The original application-script hash remains exact. Four valid broken templates fail for the main landmark, disclosure state, live status and matching share image; the previous content/metadata oracle still catches changes outside the approved additions.
+
+Chromium and WebKit each checked 320/390/768/1280px in both themes: 16 views total. The real example card intersects the initial viewport, the native appearance disclosure opens and closes, visible radio labels change the selected values, invalid usernames produce live guidance, and the 39-character fixture login produces markdown with the chosen appearance. No page errors or horizontal overflow occurred. Fixture requests never access GitHub, KV, bindings or an external AI. Actual phone keyboards and screen readers are outside this browser evidence.
