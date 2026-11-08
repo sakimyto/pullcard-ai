@@ -101,6 +101,51 @@ try {
           )
           const normal = await page.evaluate(appearance)
           check(normal, theme)
+          if (fixture === 'demo') {
+            await page.locator('#username-input').fill('octocat')
+            await page.locator('#generate-button').click()
+            const share = page.locator('#share-x')
+            await share.waitFor({ state: 'visible' })
+            const observeShare = (n) => ({
+              tag: n.tagName,
+              label: n.textContent,
+              target: n.target,
+              rel: n.rel,
+              href: n.href,
+              height: n.getBoundingClientRect().height,
+              nested: n.querySelectorAll('button,input,select,textarea,a').length,
+            })
+            const checkShare = (action) => {
+              assert.equal(action.tag, 'A')
+              assert.equal(action.label, 'Share on X')
+              assert.equal(action.target, '_blank')
+              assert.equal(action.rel, 'noopener')
+              assert.equal(action.nested, 0, 'PC9 one interactive control')
+              assert(action.height >= 48)
+              const destination = new URL(action.href)
+              assert.equal(destination.origin, 'https://twitter.com')
+              assert.equal(destination.pathname, '/intent/tweet')
+              assert(destination.searchParams.get('text').includes('#octocat'))
+            }
+            const action = await share.evaluate(observeShare)
+            checkShare(action)
+            await share.focus()
+            await page.keyboard.press('Tab')
+            assert(
+              !(await share.evaluate((n) => n.contains(document.activeElement))),
+              'PC9 share has no second tab stop',
+            )
+            await share.evaluate((n) => {
+              n.innerHTML = '<button>Share on X</button>'
+            })
+            const brokenAction = await share.evaluate(observeShare)
+            assert.throws(() => checkShare(brokenAction), /PC9/)
+            await share.evaluate((n) => {
+              n.textContent = 'Share on X'
+            })
+            assert.equal(await share.locator('button').count(), 0)
+          }
+
           if (width < 1024) {
             await page.locator('#app-menu > summary').click()
             assert(await page.locator('#app-menu').evaluate((node) => node.open))

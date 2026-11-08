@@ -5,6 +5,10 @@ import { runInNewContext } from 'node:vm'
 const digest = (value: string) => createHash('sha256').update(value).digest('hex')
 export function landingFacts(input: string) {
   const html = input
+    .replace(
+      '<a id="share-x" class="button-link ghost" target="_blank" rel="noopener">Share on X</a>',
+      '<a id="share-x" target="_blank" rel="noopener"><button class="ghost">Share on X</button></a>',
+    )
     .replace('<main id="main">', '')
     .replace(/ {4}<section id="how-it-works" data-discovery-info>[\s\S]*?<\/section><\/main>\n/, '')
     .replace(/ {8}<p class="input-help" id="username-help">[^<]*<\/p>\n/, '')

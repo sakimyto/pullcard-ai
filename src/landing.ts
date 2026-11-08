@@ -129,8 +129,9 @@ export function renderLandingPage(): string {
     .row { display: flex; gap: 8px; flex-wrap: wrap }
     input#username-input { width: 100%; max-width: 100%; flex: 1; min-width: 0; min-height: 48px; background: var(--bg); border: 1px solid var(--input); color: var(--text); padding: 12px 14px; border-radius: 8px; font-size: 16px }
     input#username-input:focus { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent) }
-    button { min-height: 48px; min-width: 44px; background: var(--primary); border: 0; color: var(--on-primary); padding: 12px 20px; border-radius: 999px; font-size: 16px; cursor: pointer; font-weight: 600 }
-    button.ghost { background: transparent; border: 1px solid var(--border); color: var(--text) }
+    .button-link { display: inline-flex; align-items: center; justify-content: center; text-decoration: none }
+    button, .button-link { min-height: 48px; min-width: 44px; background: var(--primary); border: 0; color: var(--on-primary); padding: 12px 20px; border-radius: 999px; font-size: 16px; cursor: pointer; font-weight: 600 }
+    button.ghost, .button-link.ghost { background: transparent; border: 1px solid var(--border); color: var(--text) }
     /* テーマは十数種あり横並びだと隣のカラムを押し出すので、選択肢は縦に積む */
     .customizer { display: grid; gap: 14px; margin: 20px 0; min-width: 0 }
     .choice-set { border: 0; min-width: 0 }
@@ -234,7 +235,7 @@ export function renderLandingPage(): string {
         </div>
         <div class="step">
           <div class="step-h"><span class="step-n">3</span> Share on X</div>
-          <a id="share-x" target="_blank" rel="noopener"><button class="ghost">Share on X</button></a>
+          <a id="share-x" class="button-link ghost" target="_blank" rel="noopener">Share on X</a>
         </div>
       </div>
     </section>
