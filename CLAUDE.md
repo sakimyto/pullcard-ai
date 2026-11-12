@@ -25,3 +25,9 @@ AI coding style trading card generator for GitHub profiles. Canonical URL: https
 - Pure SVG only (no foreignObject, no satori)
 - All analyzers are pure functions with typed inputs/outputs
 - Tests use fixture data, never hit real GitHub API
+
+## ツール利用の共通方針
+
+- ブラウザ（Chrome）操作は、API・CLI・接続済みアプリで実施できない場合の最後の手段とする。どの手段でも既存の承認・権限・制限は迂回しない。
+- 繰り返しや大量データなどの重い処理は、手作業やブラウザ操作で続けずスクリプト化する。
+- 作業で開いた不要なタブは、成功・失敗・中断に関わらず終了時に閉じる。ユーザーが元から開いていたタブは閉じない。
